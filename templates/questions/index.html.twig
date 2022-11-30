@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create quizz{% endblock %}
+
+{% block body %}
+    <h1>Ajouter des nouvelles question à votre quiz :</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Wording</th>
+                <th>Answers</th>
+                <th>Image</th>
+                <th>CorrectAnswer</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.Wording }}</td>
+                <td>{{ question.Answers }}</td>
+                <td>{{ question.Image }}</td>
+                <td>{{ question.CorrectAnswer }}</td>
+                <td>
+                    <a href="{{ path('app_questions_show', {'id': question.id}) }}">show</a>
+                    <a href="{{ path('app_questions_edit', {'id': question.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_questions_new') }}">Create new</a>
+{% endblock %}

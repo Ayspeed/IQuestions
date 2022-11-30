@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Questions{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Modifier questions</h1>
+
+    {{ include('questions/_form.html.twig', {'button_label': 'Update'}) }}
+
+    {{ include('questions/_delete_form.html.twig') }}
+</div>
+{% endblock %}

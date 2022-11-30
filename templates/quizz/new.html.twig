@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	IQuestions - Creation Quizz
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Ajouter un Quizz</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.Title) }}
+        {{ form_row(form.Description) }}
+        {{ form_row(form.Theme) }}
+        {{ form_row(form.Difficulty) }}
+        {{ form_row(form.imageFile) }}
+        <div class="container border border-info mb-3" id="questions" data-prototype="{{ form_row(form.Questions.vars.prototype)|e('html_attr') }}">
+            {{form_row(form.Questions)}}
+            <span></span>
+        </div>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let collection, boutonAjout, span;
+        window.onload = () => {
+            collection = document.querySelector("#questions");
+            span = collection.querySelector("span");
+            boutonAjout = document.createElement("button");
+            boutonAjout.className = "btn btn-primary my-3";
+            boutonAjout.innerText = "Ajouter une question";
+            let nouveauBouton = span.append(boutonAjout);
+            collection.dataset.index = collection.querySelectorAll("input").length;
+            boutonAjout.addEventListener("click", function(){
+                addButton(collection, nouveauBouton);
+            });
+        }
+        function addButton(collection, nouveauBouton){
+            let prototype = collection.dataset.prototype;
+            let index = collection.dataset.index;
+            prototype = prototype.replace(/__name__/g, index);
+            let content = document.createElement("html");
+            content.innerHTML = prototype;
+            let newForm = content.querySelector("div");
+            let boutonSuppr = document.createElement("button");
+            boutonSuppr.type = "button";
+            boutonSuppr.className = "btn btn-danger mb-3";
+            boutonSuppr.id = "delete-departement-" + index;
+            boutonSuppr.innerText = "Supprimer cette question";
+            newForm.append(boutonSuppr);
+            collection.dataset.index++;
+            let boutonAjout = collection.querySelector(".ajout-questions");
+            span.insertBefore(newForm, boutonAjout);
+            boutonSuppr.addEventListener("click", function(){
+                this.previousElementSibling.parentElement.remove();
+            })
+        }
+    </script>
+{% endblock %}

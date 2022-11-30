@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	IQuestions - {{ app.user.pseudo }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+	<h3>{{app.user.pseudo}}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Email</th>
+                <td>{{ app.user.email }}</td>
+            </tr>
+            <tr>
+                <th>ThemePref</th>
+                <td>{{ app.user.ThemePref }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ app.user.Age }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary mb-3" href="{{ path('app_user_edit', {'id': app.user.id}) }}">Modifier mes informations</a>
+    </div>
+
+    <div class="container">
+        <h3> Mes quizz : </h3>
+        <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Titre</th>
+      <th scope="col">Theme</th>
+      <th scope="col">Difficulté</th>
+      <th scope="col">Nombre de fois joué</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for quizz in quizzs %}
+    <tr>
+        <th>{{ quizz.title }}</th>
+        <td> {{ quizz.Theme }} </td>
+        <td> {{ quizz.Difficulty }} </td>
+        {% set i = 0 %}
+        {% for play in quizz.played %}
+            {% set i = i + 1 %}
+        {% endfor %}
+        <td> {{ i }} </td>
+        <td class="d-flex"> 
+            <a class="btn btn-outline-success mb-3" href="{{ path('app_quizz_edit', {'id': quizz.id}) }}">Modifier</a>
+            {{ include('quizz/_delete_form.html.twig') }}
+        </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a class="btn btn-outline-primary mb-3" href="{{ path('app_quizz_new', {'id': app.user.id}) }}">Créer un quizz</a>
+    </div>
+{% endblock %}

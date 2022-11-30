@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IQuestions - Création du compte{% endblock %}
+
+{% block body %}
+    <section class="container">
+    <div class="ION">
+        <div class="col">
+            <h1>Création du compte</h1>
+            <fieldset class='mb-3'>
+            <legend>Mes informations</legend>
+            {{ form_start(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.Pseudo) }}
+            {{ form_row(registrationForm.ThemePref) }}
+            {{ form_row(registrationForm.Age) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Mot de passe'
+            }) }}
+            </fieldset>
+            
+            
+            {{ form_row(registrationForm.agreeTerms) }}
+
+            <button type="submit" class="btn btn-primary">Valider</button>
+        {{ form_end(registrationForm) }}
+    </div>
+    </section>
+    
+{% endblock %}

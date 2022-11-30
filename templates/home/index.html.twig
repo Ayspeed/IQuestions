@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IQuestions
+{% endblock %}
+
+{% block body %}
+
+	<main role="main" class="container">
+		<div class="jumbotron text-center">
+			<h1>Les Quizz de IQuestions !</h1>
+			<p class="lead text-info">Vous pouvez voir ici les quizz, vous pouvez également vous inscrire pour pouvoir créer votre quizz.
+            </p>
+			<a class="btn btn-primary mb-3" href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
+            <br>
+			<tbody>
+			<div class="container-sm">
+				<form>
+					<label for="theme">Choix du thème :</label>
+						<select name="theme" id="theme">
+							<option value=""></option>
+							{% for Theme in themes %}
+								<option value={{Theme.Theme}}>{{Theme.Theme}}</option>
+							{% endfor %}
+						</select>
+					<label for="difficulty">Difficulté :</label>
+						<select name="difficulty" id="difficulty">
+							<option value=""></option>
+							{% for Difficulty in difficulties %}
+								<option value={{Difficulty.Difficulty}}>{{Difficulty.Difficulty}}</option>
+							{% endfor %}
+						</select>
+					<div class="form-floating mb-3 mx-auto" style="width: 400px;">
+						<input type="text" class="form-control" name="title" id="title" placeholder="TitleExemple">
+						<label for="title">Nom du quiz</label>
+					</div>
+					<div class="form-floating mb-3 mx-auto" style="width: 400px;">
+						<input type="text" class="form-control" name="author" id="author" placeholder="AuteurExemple">
+						<label for="author">Auteur rechercher</label>
+					</div>
+					<input type="submit" value="Filtrer" class="btn btn-outline-primary"/> 
+				</form>
+			</div>
+			<style>
+			.card{
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 23px;
+			}
+			</style>
+			<div class="container">
+				<div class="row d-flex justify-content-space-around">
+					{% for quizz in quizzs %}
+						<div class="col-auto">
+							<div class="card" style="width: 18rem;">
+								{% if quizz.ImageName != null %}
+									<img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/')~ quizz.ImageName }}" alt="Card image cap">
+								{% else %}
+									<img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/defaultQuizz.png') }}" alt="Card image cap">
+								{% endif %}
+								<div class="card-body">
+									<h5 class="card-title">{{ quizz.Title}}</h5>
+									<p class="card-text">Theme: {{ quizz.Theme}}</p>
+									<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
+									<p class="card-text">Auteur: {{ quizz.Author}}</p>
+									<a href="{{path('app_play', {'id': quizz.id})}}" class="btn btn-success">Jouer !</a>
+								</div>
+							</div>
+						</div>
+					{% else %}
+            			<tr>
+                			<td colspan="4">aucun enregistrement</td>
+            			</tr>
+					{% endfor %}
+				</div>
+			</div>
+			</tbody>
+		</div>
+	</main>
+{% endblock %}

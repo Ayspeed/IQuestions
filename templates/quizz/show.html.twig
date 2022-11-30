@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IQuestions - Quizz{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h3> Titre du quizz : {{ quizz.Title }} </h3>
+    <p>{{quizz.Description}} </p>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Theme</th>
+                <td>{{ quizz.Theme }}</td>
+            </tr>
+            <tr>
+                <th>Difficulty</th>
+                <td>{{ quizz.Difficulty }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+    <div class="container">
+        <h3> Questions : </h3>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Question</th>
+      <th scope="col">Choix de Réponses</th>
+      <th scope="col">Bonne réponse</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for question in questions %}
+    <tr>
+        <td>{{question.wording}}</th>
+        <td>|
+          {% for choix in question.Answers %}
+            {{choix}} |
+          {% endfor %}
+        </td>
+        <td>{{question.CorrectAnswer}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>    
+    <div class="d-flex">
+    <a class="btn btn-primary my-3" href="{{ path('app_quizz_edit', {'id': quizz.id}) }}">Modifier le quizz</a>
+    {# <a class="btn btn-outline-primary m-3" href="{{ path('app_questions_new', {'quizz': quizz}) }}">Ajouter une question</a> #}
+    <a class="btn btn-outline-info m-3" href="{{ path('app_user_profil')}}">Retour à la liste des quizz</a>
+    </div>
+    {{ include('quizz/_delete_form.html.twig') }}
+
+    
+    </div>
+{% endblock %}
