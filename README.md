@@ -9,7 +9,7 @@ Vous trouverez ci-dessous un exemple de la façon dont vous pouvez expliquer à 
 
 1. Cloner le dépôt (dans Symfony)
     ```sh
-    git clone https://github.com/Allaneee/IQuestions.git
+    git clone https://github.com/Ayspeed/IQuestions.git
     ```
     
 2. Modifier le fichier .env
